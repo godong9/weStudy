@@ -2,16 +2,17 @@ package com.example.godong.westudy;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTabHost;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
 public class MainActivity extends FragmentActivity
@@ -29,14 +30,8 @@ public class MainActivity extends FragmentActivity
     private static final String TAB_PLAN_TAG = "planner";
 
     /** fragment들 선언 **/
-    private TimelineFragment fragTimeline;
-    private ProfileFragment fragProfile;
-    private StudyFragment fragStudy;
-    private PlanFragment fragPlan;
-    private CalendarFragment fragCal;
-
-    private FragmentTabHost mTabHost;
-
+    private TabFragment tabFragment;
+    private ProfileFragment profileFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,30 +44,9 @@ public class MainActivity extends FragmentActivity
         /** drawer Setup **/
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout)findViewById(R.id.drawer_layout));
 
-        /** fragment 초기화 **/
-//        fragStudy = StudyFragment.newInstance();
-//        fragTimeline = TimelineFragment.newInstance();
-//        getSupportFragmentManager()
-//                .beginTransaction()
-//                .replace(R.id.fl_container, fragTimeline)
-//                .commit();
-
-        /** View 초기화 **/
-        initView();
-
 
     }
 
-
-    /** Tab View 초기화 **/
-    private void initView() {
-        mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
-        mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
-
-        mTabHost.addTab(mTabHost.newTabSpec(TAB_TIMELINE_TAG).setIndicator("타임라인"), TimelineFragment.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec(TAB_CAL_TAG).setIndicator("캘린더"), CalendarFragment.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec(TAB_PLAN_TAG).setIndicator("플래너"), PlanFragment.class, null);
-    }
 
     /**
      * Navigation Drawer item 선택 되었을 때 작업
@@ -81,45 +55,26 @@ public class MainActivity extends FragmentActivity
     @Override
     public void onNavigationDrawerItemSelected(int position){
         /** fragement로 main content update **/
+        Toast toast;
+        position = position+1;
+
+        mTitle = getString(R.string.title_timeline);
+
+        /** Test용 Toast **/
+        toast = Toast.makeText(getApplicationContext(),
+                position + " 번째 메뉴 선택", Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+
+        /** Fragment 전환 **/
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager
                 .beginTransaction()
-                .replace(R.id.realtabcontent, PlaceholderFragment.newInstance(position+1))
+                .replace(R.id.fl_container, PlaceholderFragment.newInstance(position))
                 .commit();
+
     }
 
-    /**
-     * Select 됐을 때
-     * @param number
-     */
-    public void onSectionAttached(int number){
-        switch(number){
-            case 1:
-                mTitle = getString(R.string.title_timeline);
-                fragTimeline = TimelineFragment.newInstance();
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.realtabcontent, fragTimeline)
-                        .commit();
-                break;
-            case 2:
-                mTitle = getString(R.string.title_profile);
-                fragProfile = ProfileFragment.newInstance();
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.realtabcontent, fragProfile)
-                        .commit();
-                break;
-            case 3:
-                mTitle = getString(R.string.title_study);
-                fragStudy = StudyFragment.newInstance();
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.realtabcontent, fragStudy)
-                        .commit();
-                break;
-        }
-    }
 
     /**
      * ActionBar restore
@@ -137,14 +92,48 @@ public class MainActivity extends FragmentActivity
         if(!mNavigationDrawerFragment.isDrawerOpen()){
             /** Drawer가 열리지 않았을 때(안 보일 때) menu item이 보일 수 있다. **/
             /** Only show items in the action bar relevant to this screen
-                if the drawer is not showing. Otherwise, let the drawer
-                decide what to show in the action bar. **/
+             if the drawer is not showing. Otherwise, let the drawer
+             decide what to show in the action bar. **/
             getMenuInflater().inflate(R.menu.main, menu);
             restoreActionBar();
             return true;
         }
         return super.onCreateOptionsMenu(menu);
     }
+
+    /**
+     * Select 됐을 때
+     * @param number
+     */
+    public void onSectionAttached(int number){
+        switch(number){
+            case 1:
+                mTitle = getString(R.string.title_timeline);
+                tabFragment = TabFragment.newInstance();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fl_container, tabFragment)
+                        .commit();
+                break;
+            case 2:
+                mTitle = getString(R.string.title_profile);
+                profileFragment = profileFragment.newInstance();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fl_container, profileFragment)
+                        .commit();
+                break;
+            case 3:
+                mTitle = getString(R.string.title_study);
+                tabFragment = TabFragment.newInstance();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fl_container, tabFragment)
+                        .commit();
+                break;
+        }
+    }
+
 
     public static class PlaceholderFragment extends Fragment {
 
@@ -165,7 +154,7 @@ public class MainActivity extends FragmentActivity
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-            View rootView = inflater.inflate(R.layout.fragment_timeline, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_blank, container, false);
             return rootView;
         }
 
