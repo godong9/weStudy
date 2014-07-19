@@ -3,7 +3,7 @@ package com.example.godong.westudy;
 
 import android.app.Activity;
 import android.app.ActionBar;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -59,6 +59,7 @@ public class NavigationDrawerFragment extends Fragment {
     private boolean mUserLearnedDrawer;
 
     public NavigationDrawerFragment() {
+
     }
 
     @Override
@@ -86,6 +87,13 @@ public class NavigationDrawerFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
+    /**
+     * NavigationDrawerFragment init부분
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -97,14 +105,15 @@ public class NavigationDrawerFragment extends Fragment {
                 selectItem(position);
             }
         });
+        /** Adapter setup 부분. 선택할 수 있는 section string 설정 **/
         mDrawerListView.setAdapter(new ArrayAdapter<String>(
                 getActionBar().getThemedContext(),
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
                 new String[]{
-                        getString(R.string.title_section1),
-                        getString(R.string.title_section2),
-                        getString(R.string.title_section3),
+                        getString(R.string.title_timeline),
+                        getString(R.string.title_profile),
+                        getString(R.string.title_study),
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
@@ -248,8 +257,8 @@ public class NavigationDrawerFragment extends Fragment {
         }
 
         if (item.getItemId() == R.id.action_example) {
-            Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
-            return true;
+           Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
+           return true;
         }
 
         return super.onOptionsItemSelected(item);
