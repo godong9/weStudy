@@ -87,6 +87,13 @@ public class NavigationDrawerFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
+    /**
+     * NavigationDrawerFragment init부분
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -98,6 +105,7 @@ public class NavigationDrawerFragment extends Fragment {
                 selectItem(position);
             }
         });
+        /** Adapter setup 부분. 선택할 수 있는 section string 설정 **/
         mDrawerListView.setAdapter(new ArrayAdapter<String>(
                 getActionBar().getThemedContext(),
                 android.R.layout.simple_list_item_activated_1,

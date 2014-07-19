@@ -15,12 +15,16 @@ public class TabFragment extends Fragment {
     /** TabHost 선언 **/
     private FragmentTabHost mTabHost;
 
+
+    /** MainActivity 에서 호출할 수 있게 Instance 생성 **/
     public static TabFragment newInstance(){
 
         TabFragment fragment = new TabFragment();
 
         return fragment;
     }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

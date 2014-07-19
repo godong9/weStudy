@@ -15,13 +15,6 @@ public class PlanFragment extends Fragment {
 
     }
 
-    public static PlanFragment newInstance(){
-
-        PlanFragment fragment = new PlanFragment();
-
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);

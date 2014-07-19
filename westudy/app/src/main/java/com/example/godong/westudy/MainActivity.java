@@ -24,12 +24,7 @@ public class MainActivity extends FragmentActivity
     /** Used to store the last screen title. For use in restoreActionBar(). **/
     private CharSequence mTitle;
 
-    /** Tag 선언 **/
-    private static final String TAB_TIMELINE_TAG = "timeline";
-    private static final String TAB_CAL_TAG = "calendar";
-    private static final String TAB_PLAN_TAG = "planner";
-
-    /** fragment들 선언 **/
+    /** fragment들 선언 (DrawerBar에서 선택할 Fragment) **/
     private TabFragment tabFragment;
     private ProfileFragment profileFragment;
 
@@ -90,7 +85,6 @@ public class MainActivity extends FragmentActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         if(!mNavigationDrawerFragment.isDrawerOpen()){
-            /** Drawer가 열리지 않았을 때(안 보일 때) menu item이 보일 수 있다. **/
             /** Only show items in the action bar relevant to this screen
              if the drawer is not showing. Otherwise, let the drawer
              decide what to show in the action bar. **/
@@ -102,7 +96,7 @@ public class MainActivity extends FragmentActivity
     }
 
     /**
-     * Select 됐을 때
+     * Section Select 됐을 때 실제 Fragment 전환 작업
      * @param number
      */
     public void onSectionAttached(int number){
@@ -135,6 +129,9 @@ public class MainActivity extends FragmentActivity
     }
 
 
+    /**
+     *
+     */
     public static class PlaceholderFragment extends Fragment {
 
         /** The fragment argument representing the section number for this fragment. **/

@@ -15,13 +15,6 @@ public class CalendarFragment extends Fragment{
 
     }
 
-    public static CalendarFragment newInstance(){
-
-        CalendarFragment fragment = new CalendarFragment();
-
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);

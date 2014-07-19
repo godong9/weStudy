@@ -15,13 +15,6 @@ public class TimelineFragment extends Fragment{
 
     }
 
-    public static TimelineFragment newInstance(){
-
-        TimelineFragment fragment = new TimelineFragment();
-
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
